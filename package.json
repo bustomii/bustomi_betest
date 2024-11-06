@@ -1,0 +1,41 @@
+{
+  "name": "ms-bustomi-betest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./app/index.ts",
+  "scripts": {
+    "start": "nodemon && ts-node ./app/index.ts"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeder.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bustomii/bustomi_betest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bustomii/bustomi_betest/issues"
+  },
+  "homepage": "https://github.com/bustomii/bustomi_betest#readme",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.0"
+  }
+}
