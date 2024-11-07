@@ -5,12 +5,14 @@ export class UserDataClass {
     private accountNumber: string;
     private emailAddress: string;
     private identityNumber: string;
+    private createdBy: any;
     
-    constructor( userName: string, accountNumber: string, emailAddress: string, identityNumber: string) {
+    constructor( userName: string, accountNumber: string, emailAddress: string, identityNumber: string, createdBy: any) {
         this.userName = userName;
         this.accountNumber = accountNumber;
         this.emailAddress = emailAddress;
         this.identityNumber = identityNumber;
+        this.createdBy = createdBy;
     }
 
     // // crud
@@ -21,7 +23,12 @@ export class UserDataClass {
                 userName: this.userName,
                 accountNumber: this.accountNumber,
                 emailAddress: this.emailAddress,
-                identityNumber: this.identityNumber
+                identityNumber: this.identityNumber,
+                createdBy: {
+                    connect: {
+                        id: this.createdBy,
+                    },
+                },
             }
         });
 

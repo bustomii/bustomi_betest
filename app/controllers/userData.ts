@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma/client";
 import { UserDataClass } from "../../class/userData";
+import Redis from 'ioredis';
 
 // create user data
 export const CreateUserData = async (req: Request, res: Response) => {
@@ -10,22 +11,8 @@ export const CreateUserData = async (req: Request, res: Response) => {
             return res.status(400).send("All input is required");
         }
 
-        const thisClass = new UserDataClass(userName, accountNumber, emailAddress, identityNumber);
-        const data = await thisClass.create();
-
-        // const data = await prisma.userData.create({
-        //     data: {
-        //         userName: userName,
-        //         accountNumber: accountNumber,
-        //         emailAddress: emailAddress,
-        //         identityNumber: identityNumber,
-        //         createdBy: {
-        //             connect: {
-        //                 id: req.body.user.id,
-        //             },
-        //         },
-        //     }
-        // });
+        const thisClass = new UserDataClass(userName, accountNumber, emailAddress, identityNumber, req.body.user.id);
+        const data = await thisClass.create().then((data) => data);
 
         return res.status(200).send({
             status: true,
@@ -102,7 +89,18 @@ export const DeleteUserData = async (req: Request, res: Response) => {
 // get user data
 export const GetAllUserData = async (req: Request, res: Response) => {
     try {
+        const redis = new Redis();
+        const cache = await redis.get('userData' + req.body.user.id);
+        if (cache) {
+            return res.status(200).send({
+                status: true,
+                message: "Data fetched",
+                data: JSON.parse(cache),
+            });
+        }
+
         const data = await prisma.userData.findMany();
+        await redis.set('userData' + req.body.user.id, JSON.stringify(data), 'EX', 60);
 
         return res.status(200).send({
             status: true,
