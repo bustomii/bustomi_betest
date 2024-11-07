@@ -15,7 +15,7 @@ datasource db {
 }
 
 model UserData {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  id             Bytes  @id @default(auto()) @map("_id") @db.ObjectId
   userName       String
   accountNumber  String
   emailAddress   String @unique
@@ -23,7 +23,7 @@ model UserData {
 }
 
 model UserAuth {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       Bytes  @id @default(auto()) @map("_id") @db.ObjectId
   userName String @unique
   password String
 }
