@@ -16,6 +16,9 @@ export const CreateUserData = async (req: Request, res: Response) => {
         const thisClass = new UserDataClass(userName, accountNumber, emailAddress, identityNumber, req.body.user.id);
         const data = await thisClass.create().then((data) => data);
 
+        // reset cache
+        await redis.del('userData' + req.body.user.id);
+
         return res.status(200).send({
             status: true,
             message: "Data created",
