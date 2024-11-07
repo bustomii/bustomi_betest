@@ -4,6 +4,8 @@ import { UserDataClass } from "../../class/userData";
 import Redis from 'ioredis';
 
 // create user data
+const redis = new Redis({ host: 'localhost', port: 6379 });
+
 export const CreateUserData = async (req: Request, res: Response) => {
     try {
         const { userName, accountNumber, emailAddress, identityNumber } = req.body;
@@ -46,6 +48,9 @@ export const UpdateUserData = async (req: Request, res: Response) => {
             }
         });
 
+        // reset cache
+        await redis.del('userData' + req.body.user.id);
+
         return res.status(200).send({
             status: true,
             message: "Data updated",
@@ -73,6 +78,9 @@ export const DeleteUserData = async (req: Request, res: Response) => {
             }
         });
 
+        // reset cache
+        await redis.del('userData' + req.body.user.id);
+
         return res.status(200).send({
             status: true,
             message: "Data deleted",
@@ -89,7 +97,6 @@ export const DeleteUserData = async (req: Request, res: Response) => {
 // get user data
 export const GetAllUserData = async (req: Request, res: Response) => {
     try {
-        const redis = new Redis({ host: 'localhost', port: 6379 });
         const cache = await redis.get('userData' + req.body.user.id);
         if (cache) {
             return res.status(200).send({
