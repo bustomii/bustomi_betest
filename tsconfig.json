@@ -8,7 +8,7 @@
     },
     "include": [
         "./app/**/*.ts",
-        "./class/**/*.tsx"
+        "class/**/*.tsx"
     ],
     "exclude": [
         "node_modules"

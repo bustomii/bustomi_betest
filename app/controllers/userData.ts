@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma/client";
+import { UserDataClass } from "../../class/userData";
 
 // create user data
 export const CreateUserData = async (req: Request, res: Response) => {
@@ -9,19 +10,22 @@ export const CreateUserData = async (req: Request, res: Response) => {
             return res.status(400).send("All input is required");
         }
 
-        const data = await prisma.userData.create({
-            data: {
-                userName: userName,
-                accountNumber: accountNumber,
-                emailAddress: emailAddress,
-                identityNumber: identityNumber,
-                createdBy: {
-                    connect: {
-                        id: req.body.user.id,
-                    },
-                },
-            }
-        });
+        const thisClass = new UserDataClass(userName, accountNumber, emailAddress, identityNumber);
+        const data = await thisClass.create();
+
+        // const data = await prisma.userData.create({
+        //     data: {
+        //         userName: userName,
+        //         accountNumber: accountNumber,
+        //         emailAddress: emailAddress,
+        //         identityNumber: identityNumber,
+        //         createdBy: {
+        //             connect: {
+        //                 id: req.body.user.id,
+        //             },
+        //         },
+        //     }
+        // });
 
         return res.status(200).send({
             status: true,
