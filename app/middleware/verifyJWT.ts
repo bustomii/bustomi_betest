@@ -5,7 +5,7 @@ import prisma from "../../prisma/client";
 const config = process.env;
 
 const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
-  const token:string = req.body.token || req.query.token || req.headers["x-access-token"];
+  const token:string = req.headers.authorization?.split(" ")[1] ?? "";
   if (!token) {
     return res.status(403).send({
         status: false,
@@ -15,9 +15,8 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const decoded = jwt.verify(token, config.TOKEN_KEY!);
-    const user = await prisma.userAuth.findUnique({ where: { id: decoded.user } });
+    const user = await prisma.userAuth.findUnique({ where: { userName: decoded.username } });
     req.body.user = user;
-    
   } catch (err) {
     return res.status(401).send({
         status: false,
