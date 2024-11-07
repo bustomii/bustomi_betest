@@ -8,6 +8,8 @@ async function run() {
     data: {
       userName: "admin",
       password: await bcrypt.hash("admin", 10),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
   });
 }
