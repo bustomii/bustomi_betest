@@ -15,51 +15,51 @@ export class UserData {
         this.identityNumber = identityNumber;
     }
 
-    // crud
-    public async create(): Promise<void> {
-        // create
-        await prisma.userData.create({
-            data: {
-                userName: this.userName,
-                accountNumber: this.accountNumber,
-                emailAddress: this.emailAddress,
-                identityNumber: this.identityNumber
-            }
-        });
-    }
+    // // crud
+    // public async create(): Promise<void> {
+    //     // create
+    //     await prisma.userData.create({
+    //         data: {
+    //             userName: this.userName,
+    //             accountNumber: this.accountNumber,
+    //             emailAddress: this.emailAddress,
+    //             identityNumber: this.identityNumber
+    //         }
+    //     });
+    // }
 
-    public async read(): Promise<void> {
-        // read
-        await prisma.userData.findUnique({
-            where: {
-                id: this.id
-            }
-        });
-    }
+    // public async read(): Promise<void> {
+    //     // read
+    //     await prisma.userData.findUnique({
+    //         where: {
+    //             id: this.id
+    //         }
+    //     });
+    // }
 
-    public async update(): Promise<void> {
-        // update
-        await prisma.userData.update({
-            where: {
-                id: this.id
-            },
-            data: {
-                userName: this.userName,
-                accountNumber: this.accountNumber,
-                emailAddress: this.emailAddress,
-                identityNumber: this.identityNumber
-            }
-        });
-    }
+    // public async update(): Promise<void> {
+    //     // update
+    //     await prisma.userData.update({
+    //         where: {
+    //             id: this.id
+    //         },
+    //         data: {
+    //             userName: this.userName,
+    //             accountNumber: this.accountNumber,
+    //             emailAddress: this.emailAddress,
+    //             identityNumber: this.identityNumber
+    //         }
+    //     });
+    // }
 
-    public async delete(): Promise<void> {
-        // delete
-        await prisma.userData.delete({
-            where: {
-                id: this.id
-            }
-        });
-    }
+    // public async delete(): Promise<void> {
+    //     // delete
+    //     await prisma.userData.delete({
+    //         where: {
+    //             id: this.id
+    //         }
+    //     });
+    // }
 
 
 }

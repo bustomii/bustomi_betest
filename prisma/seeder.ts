@@ -1,22 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+
 const prisma = new PrismaClient();
 
-async function main() {
+async function run() {
   await prisma.userAuth.create({
     data: {
-        userName: "admin",
-        password: await bcrypt.hash("admin", 10),
-    }});
+      userName: "admin",
+      password: await bcrypt.hash("admin", 10),
+    },
+  });
 }
-
-const run = async () => {
-    await main();
-  };
 
 run()
   .catch((e) => {
-    throw e;
+    console.log(e);
+    process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();
