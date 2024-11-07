@@ -29,8 +29,8 @@ export const CreateUserData = async (req: Request, res: Response) => {
         });
     } catch (err:any) {
         return res.status(500).send({
-            status: false,
-            message: err.getMessage(),
+            status: false, 
+            message: err?.meta?.cause ?? 'Internal server error',
         });
     }
 }
@@ -61,7 +61,7 @@ export const UpdateUserData = async (req: Request, res: Response) => {
     } catch (err:any) {
         return res.status(500).send({
             status: false,
-            message: err.getMessage(),
+            message: err?.meta?.cause ?? 'Internal server error',
         });
     }
 }
@@ -87,7 +87,7 @@ export const DeleteUserData = async (req: Request, res: Response) => {
     } catch (err:any) {
         return res.status(500).send({
             status: false,
-            message: err.getMessage(),
+            message: err?.meta?.cause ?? 'Internal server error',
         });
     }
 }
@@ -105,7 +105,7 @@ export const GetAllUserData = async (req: Request, res: Response) => {
     } catch (err:any) {
         return res.status(500).send({
             status: false,
-            message: err.getMessage(),
+            message: err?.meta?.cause ?? 'Internal server error',
         });
     }
 }
