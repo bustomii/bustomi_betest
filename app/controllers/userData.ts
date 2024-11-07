@@ -89,7 +89,7 @@ export const DeleteUserData = async (req: Request, res: Response) => {
 // get user data
 export const GetAllUserData = async (req: Request, res: Response) => {
     try {
-        const redis = new Redis();
+        const redis = new Redis({ host: 'localhost', port: 6379 });
         const cache = await redis.get('userData' + req.body.user.id);
         if (cache) {
             return res.status(200).send({
