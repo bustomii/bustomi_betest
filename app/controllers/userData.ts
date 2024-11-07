@@ -27,8 +27,11 @@ export const CreateUserData = async (req: Request, res: Response) => {
             status: true,
             message: "Data created",
         });
-    } catch (err) {
-        return res.status(500).send(err);
+    } catch (err:any) {
+        return res.status(500).send({
+            status: false,
+            message: err.getMessage(),
+        });
     }
 }
 
@@ -55,8 +58,11 @@ export const UpdateUserData = async (req: Request, res: Response) => {
             status: true,
             message: "Data updated",
         });
-    } catch (err) {
-        return res.status(500).send(err);
+    } catch (err:any) {
+        return res.status(500).send({
+            status: false,
+            message: err.getMessage(),
+        });
     }
 }
 
@@ -78,8 +84,11 @@ export const DeleteUserData = async (req: Request, res: Response) => {
             status: true,
             message: "Data deleted",
         });
-    } catch (err) {
-        return res.status(500).send(err);
+    } catch (err:any) {
+        return res.status(500).send({
+            status: false,
+            message: err.getMessage(),
+        });
     }
 }
 
@@ -93,7 +102,10 @@ export const GetAllUserData = async (req: Request, res: Response) => {
             status: true,
             data: data,
         });
-    } catch (err) {
-        return res.status(500).send(err);
+    } catch (err:any) {
+        return res.status(500).send({
+            status: false,
+            message: err.getMessage(),
+        });
     }
 }
