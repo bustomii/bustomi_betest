@@ -1,9 +1,14 @@
-import test, { describe } from "node:test";
-import { reqCreateUserData, reqDeleteUserData, reqGenerateToken, reqUpdateUserData } from "./json";
 import app from "..";
-
+import { reqCreateUserData, reqDeleteUserData, reqGenerateToken, reqUpdateUserData } from "./json";
 const request = require("supertest")
+
 let token = ""
+
+describe("Hai", () => {
+    test("should return 1", async () => {
+        expect(1).toBe(1)
+    });
+});
 
 describe("POST /auth", () => {
     test("should generate a token", async () => {
@@ -11,13 +16,12 @@ describe("POST /auth", () => {
             .post("/auth")
             .send(reqGenerateToken)
             .expect(200)
-            .then((response: any) => {
+            .then((response: { body: { data: { token: string; }; }; }) => {
                 token = response.body.data.token
             })
     }
     );
 });
-
 
 describe("POST /user/create", () => {
     test("should create a userData", async () => {
@@ -47,7 +51,6 @@ describe("PUT /user/update", () => {
             .expect(200)
     });
 });
-
 
 describe("DELETE /user/delete", () => {
     test("should delete a userData", async () => {

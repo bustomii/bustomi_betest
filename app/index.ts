@@ -13,13 +13,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(router);
 
-router.get("/", (req: Request, res: Response) => {
-  res.status(404).send({
-    data: "Not Found",
-    status: 404,
-  });
-});
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`http://localhost:${PORT}`);
