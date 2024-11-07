@@ -96,6 +96,7 @@ export const GetAllUserData = async (req: Request, res: Response) => {
                 status: true,
                 message: "Data fetched",
                 data: JSON.parse(cache),
+                statusCache: 'hit',
             });
         }
 
@@ -106,6 +107,7 @@ export const GetAllUserData = async (req: Request, res: Response) => {
             status: true,
             message: "Data fetched",
             data: data,
+            statusCache: 'miss',
         });
     } catch (err:any) {
         return res.status(500).send({
