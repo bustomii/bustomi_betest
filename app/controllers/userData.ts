@@ -9,7 +9,7 @@ export const CreateUserData = async (req: Request, res: Response) => {
             return res.status(400).send("All input is required");
         }
 
-        await prisma.userData.create({
+        const data = await prisma.userData.create({
             data: {
                 userName: userName,
                 accountNumber: accountNumber,
@@ -26,6 +26,7 @@ export const CreateUserData = async (req: Request, res: Response) => {
         return res.status(200).send({
             status: true,
             message: "Data created",
+            data: data,
         });
     } catch (err:any) {
         return res.status(500).send({
@@ -43,7 +44,7 @@ export const UpdateUserData = async (req: Request, res: Response) => {
             return res.status(400).send("All input is required");
         }
 
-        await prisma.userData.update({
+       const data = await prisma.userData.update({
             where: {
                 userName: userName,
             },
@@ -57,6 +58,7 @@ export const UpdateUserData = async (req: Request, res: Response) => {
         return res.status(200).send({
             status: true,
             message: "Data updated",
+            data : data,
         });
     } catch (err:any) {
         return res.status(500).send({
@@ -100,6 +102,7 @@ export const GetAllUserData = async (req: Request, res: Response) => {
 
         return res.status(200).send({
             status: true,
+            message: "Data fetched",
             data: data,
         });
     } catch (err:any) {
