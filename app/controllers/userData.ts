@@ -100,6 +100,47 @@ export const DeleteUserData = async (req: Request, res: Response) => {
 // get user data
 export const GetAllUserData = async (req: Request, res: Response) => {
     try {
+        const { userName, accountNumber, emailAddress, identityNumber } = req.query;
+        if(userName || accountNumber || emailAddress || identityNumber) {
+            const cache = await redis.get('userData' + req.body.user.id + JSON.stringify(req.query));
+            if (cache) {
+                return res.status(200).send({
+                    status: true,
+                    message: "Data fetched",
+                    data: JSON.parse(cache),
+                    statusCache: 'hit',
+                });
+            }
+            // search by query params use or where clause
+            const data = await prisma.userData.findMany({
+                where: {
+                    OR: [
+                        {
+                            userName: userName?.toString() ??'',
+                        },
+                        {
+                            accountNumber: accountNumber?.toString() ??'',
+                        },
+                        {
+                            emailAddress: emailAddress?.toString() ??'',
+                        },
+                        {
+                            identityNumber: identityNumber?.toString() ??'',
+                        },
+                    ],
+                },
+            });
+
+            await redis.set('userData' + req.body.user.id + JSON.stringify(req.query), JSON.stringify(data), 'EX', 60);
+
+            return res.status(200).send({
+                status: true,
+                message: "Data fetched",
+                data: data,
+                statusCache: 'miss',
+            });
+        }
+
         const cache = await redis.get('userData' + req.body.user.id);
         if (cache) {
             return res.status(200).send({
