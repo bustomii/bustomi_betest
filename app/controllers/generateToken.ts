@@ -13,21 +13,13 @@ export const GenerateToken = async (req: Request, res: Response) => {
         const user = await prisma.userAuth.findUnique({ where: { userName:username } });
     
         if (user && (await bcrypt.compare(password, user.password))) {
-          const generateToken:string = jwt.sign(
-            { user: user.id, username: user.userName },
-            process.env.TOKEN_KEY!,
-            {
-              expiresIn: "1d",
-            }
-          );
-    
-          res.status(200).json({
+          const generateToken:string = jwt.sign({ user: user.id, username: user.userName },process.env.TOKEN_KEY!,{expiresIn: "1d",});
+          res.status(200).send({
             status: true,
             message: "Login success",
             data: {
               token: generateToken,
               user: {
-                id: user.id,
                 username: user.userName
               },
             },
